@@ -1,0 +1,491 @@
+/* --- Global Reset & Font Setup --- */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-image: url('icons/background.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    width: 360px; /* narrow popup window */
+    color: #111827;
+}
+
+.hidden {
+    display: none !important;
+}
+
+/* --- Main Layout --- */
+.container {
+    display: flex;
+    flex-direction: column;
+    padding: 24px 16px;
+    gap: 20px; /* Space between sections */
+}
+
+header {
+    text-align: center;
+}
+
+header h1 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+header h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #6b7280; /* A slightly lighter grey */
+}
+
+/* --- Model Picker Icons --- */
+/* In popup.css */
+
+/* --- Model Picker Icons --- */
+/* In popup.css */
+
+/* --- Model Picker Icons --- */
+.model-picker {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+}
+
+/* This is the container for each icon */
+.model-icon-wrapper {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    cursor: pointer;
+    /* IMPORTANT: Added 'transform' to the transition for the new hover effect */
+    transition: box-shadow 0.2s ease-in-out, transform 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+/* The actual <img> tag inside the wrapper */
+.model-icon {
+    width: 28px;
+    height: 28px;
+    opacity: 0.5;
+    transition: opacity 0.2s ease-in-out;
+}
+
+
+/* --- THIS IS THE UPDATED LOGIC --- */
+
+/* 1. Hover effect for any INACTIVE wrapper */
+.model-icon-wrapper:not(.active):hover {
+    border-color: #d1d5db;
+    box-shadow: 0 0 12px 1px rgba(209, 213, 219, 0.8); /* Subtle grey glow */
+}
+
+/* 2. Make the icon inside ANY hovered wrapper fully visible */
+.model-icon-wrapper:hover .model-icon {
+    opacity: 1;
+}
+
+/* 3. Style for the selected (ACTIVE) wrapper */
+.model-icon-wrapper.active {
+    border-color: transparent; /* Hide border to enhance the glow */
+    box-shadow: 0 0 15px 2px rgba(196, 181, 253, 0.9); /* Strong purple glow */
+}
+
+/* 4. NEW RULE: Hover effect for the already ACTIVE wrapper */
+.model-icon-wrapper.active:hover {
+    /* Make the purple glow slightly bigger and brighter */
+    box-shadow: 0 0 20px 4px rgba(196, 181, 253, 1);
+    /* Make the icon pop out a little */
+    transform: scale(1.05);
+}
+
+/* 5. Make the icon inside the active wrapper fully visible (no change here) */
+.model-icon-wrapper.active .model-icon {
+    opacity: 1;
+}
+
+/* --- Simple Outlined Buttons --- */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 12px;
+}
+
+button {
+    font-family: 'Inter', sans-serif;
+    font-size: 13px;
+    padding: 6px 12px;
+    background-color: transparent;
+    border: 1px solid #d1d5db; /* Light grey border */
+    border-radius: 6px;
+    cursor: pointer;
+    color: #374151; /* Dark grey text */
+    transition: background-color 0.2s ease, border-color 0.2s ease;
+}
+
+button:hover {
+    background-color: #f3f4f6;
+    border-color: #9ca3af;
+}
+
+/* --- Content Area & Loader --- */
+.content-area {
+    min-height: 0px; /* Provides space for the loader/results */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.loader {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    /* The light grey background circle */
+    border: 5px solid #e5e7eb; 
+    /* The purple spinning part */
+    border-top-color: #8b5cf6; 
+    animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.error {
+    color: #ef4444;
+    font-weight: 600;
+}
+
+/* --- New Styles for Summary Result Text --- */
+
+#summary-result {
+    /* Use a standard, highly-readable system font */
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 15px;      /* Slightly larger for readability */
+    line-height: 1.6;     /* Generous spacing between lines */
+    color: #1f2937;       /* A dark, soft black for text */
+    text-align: left;
+    white-space: normal;  /* Override previous pre-wrap for better flow */
+
+    align-items: center;
+    justify-content: center;
+    overflow-x: auto; /* allow scrolling for wider flashcards */
+    padding: 12px;
+}
+
+/* Style for paragraphs, like the summary text */
+#summary-result p {
+    margin-bottom: 1em; /* Space after a paragraph */
+}
+
+/* Style for the bolded titles like "Summary:" */
+#summary-result strong {
+    font-weight: 600; /* A nice semi-bold weight */
+    color: #111827;   /* Make titles slightly darker */
+}
+
+/* Styling for the bulleted list */
+#summary-result ul {
+    list-style-type: disc; /* Ensure standard black dots */
+    padding-left: 20px;    /* Indent the entire list */
+    margin: 0;
+}
+
+/* Styling for each list item */
+#summary-result li {
+    margin-bottom: 0.75em; /* Space between each bullet point */
+    padding-left: 4px;     /* Small space between bullet and text */
+}
+
+/* In popup.css */
+
+/* --- New Styles for Search Input Field --- */
+
+.search-input-group {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    width: 100%;
+}
+
+#search-input {
+    flex-grow: 1; /* Makes the input take up available space */
+    font-family: 'Inter', sans-serif;
+    font-size: 14px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    padding: 8px 12px;
+    background-color: #f9fafb;
+    transition: all 0.2s ease-in-out;
+}
+
+#search-input:focus {
+    outline: none;
+    border-color: #8b5cf6;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(139, 92, 246, 0.2);
+}
+
+#send-button {
+    flex-shrink: 0; /* Prevents the button from shrinking */
+    width: 36px;
+    height: 36px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%; /* Makes it a circle */
+    background-color: #8b5cf6;
+    color: white;
+    border: none;
+}
+
+#send-button:hover {
+    background-color: #7c3aed;
+}
+
+/* Make sure the content area has a minimum height */
+
+/* --- Elegant Dropdown Styles --- */
+.dropdown {
+    position: relative; /* Anchor for the absolute dropdown panel */
+}
+
+.casual {
+    width: 40px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 10px;
+    background: rgba(255,255,255,0.6);
+    backdrop-filter: blur(6px);
+    border: 1px solid rgba(15,23,42,0.06);
+    box-shadow: 0 6px 18px rgba(17,24,39,0.08);
+    transition: transform 160ms ease, box-shadow 160ms ease, background 160ms ease;
+    cursor: pointer;
+}
+
+.casual:hover, .casual:focus {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(17,24,39,0.12);
+    background: rgba(255,255,255,0.75);
+}
+
+.dropdown-content {
+    position: fixed; /* position relative to popup viewport so we can compute exact coordinates in JS */
+    min-width: 180px;
+    background: rgba(255,255,255,0.92);
+    backdrop-filter: blur(8px);
+    border-radius: 12px;
+    padding: 8px;
+    box-shadow: 0 12px 30px rgba(2,6,23,0.2);
+    border: 1px solid rgba(15,23,42,0.06);
+    z-index: 9999;
+    display: none; /* JS toggles display:block */
+    transform-origin: top right;
+    transform: scale(0.96);
+    opacity: 0;
+    transition: opacity 180ms ease, transform 180ms ease;
+}
+
+.dropdown-content.show {
+    display: block;
+    transform: scale(1);
+    opacity: 1;
+}
+
+.dropdown-content button {
+    width: 100%;
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border-radius: 8px;
+    background: transparent;
+    border: none;
+    text-align: left;
+    color: #0f172a;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background 120ms ease, transform 120ms ease;
+}
+
+.dropdown-content button:hover,
+.dropdown-content button:focus {
+    background: linear-gradient(90deg, rgba(139,92,246,0.06), rgba(139,92,246,0.02));
+    transform: translateX(4px);
+    outline: none;
+}
+
+.dropdown-content button svg {
+    width: 16px;
+    height: 16px;
+    flex-shrink: 0;
+    opacity: 0.9;
+}
+
+/* Small decorative caret */
+/* decorative caret removed to keep positioning simple across platforms */
+
+/* Make dropdown accessible in dark/light backgrounds */
+@media (prefers-color-scheme: dark) {
+    .dropdown-content {
+        background: rgba(10,11,13,0.85);
+        border: 1px solid rgba(255,255,255,0.04);
+        box-shadow: 0 14px 40px rgba(2,6,23,0.6);
+    }
+    .casual { background: rgba(20,21,24,0.6); }
+    .dropdown-content button { color: #e6eef8; }
+}
+
+/* Ensure the dropdown never forces large popup resize */
+.dropdown { z-index: 10; }
+
+/* --- Flashcards styles --- */
+.flashcards-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.flashcard {
+    perspective: 1000px;
+}
+
+.flashcard-inner {
+
+    width: 80px;
+    max-width: 480px; /* wider flashcard */
+    min-height: 120px;
+    transform-style: preserve-3d;
+    transition: transform 560ms cubic-bezier(.2,.8,.2,1);
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(2,6,23,0.12);
+}
+
+/* Wide, responsive flashcard variant */
+.flashcard-large .flashcard-inner {
+    max-width: 480px; /* preferred large width */
+    width: 100%;
+}
+
+.flashcard-large .flashcard-face {
+    padding: 22px 20px;
+}
+
+.flashcard-large .flashcard h3 { font-size: 18px; }
+.flashcard-large .flashcard p { font-size: 15px; }
+
+.flashcard.flipped .flashcard-inner {
+    transform: rotateY(180deg);
+}
+
+.flashcard-face {
+
+    inset: 0;
+    backface-visibility: hidden;
+    border-radius: 10px;
+    padding: 18px 16px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    overflow-wrap: break-word;
+    word-break: normal;
+    white-space: normal;
+
+}
+
+.flashcard-front {
+    background: linear-gradient(180deg, #ffffff, #fbfbfb);
+    border: 1px solid rgba(15,23,42,0.06);
+    box-shadow: 0 14px 40px rgba(2,6,23,0.08);
+}
+
+.flashcard-back {
+    background: linear-gradient(180deg, #fff8e1, #fff3bf);
+    transform: rotateY(180deg);
+    border: 1px solid rgba(15,23,42,0.06);
+    box-shadow: 0 12px 30px rgba(2,6,23,0.06);
+}
+
+.flashcard h3 { font-size: 16px; margin: opx; line-height: 1.2; font-weight: 700; color: #0f172a; }
+.flashcard p { font-size: 14px; margin: 0; color: #111827; line-height: 1.45; }
+
+.flashcards-footer { display: flex; gap: 8px; align-items: center; justify-content: center; margin-top: 8px; }
+.flashcards-back-btn { padding: 6px 10px; border-radius: 8px; border: 1px solid #e5e7eb; background: white; cursor: pointer; }
+
+@media (max-width: 420px) {
+    .flashcards-container { grid-template-columns: 1fr; }
+}
+
+/* Single-card view with navigation */
+.flashcard-view {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+    padding: 8px 0;
+}
+
+.card-wrapper {
+    width: 100%;
+    max-width: 480px; /* wider card to present more text per line */
+    perspective: 1100px;
+    min-height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.card-enter {
+    animation: cardIn 420ms cubic-bezier(.2,.9,.2,1);
+}
+
+.card-exit {
+    animation: cardOut 320ms cubic-bezier(.2,.9,.2,1);
+}
+
+@keyframes cardIn {
+    from { transform: translateY(8px) scale(0.98); opacity: 0; }
+    to { transform: translateY(0) scale(1); opacity: 1; }
+}
+
+@keyframes cardOut {
+    from { transform: translateY(0) scale(1); opacity: 1; }
+    to { transform: translateY(-8px) scale(0.98); opacity: 0; }
+}
+
+.flashcard-controls {
+    display: flex;
+    gap: 8px;
+    align-items: center;
+    justify-content: center;
+}
+
+.btn-nav {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: 1px solid #e5e7eb;
+    background: white;
+    cursor: pointer;
+    transition: transform 120ms ease, box-shadow 120ms ease;
+}
+
+.btn-nav:disabled { opacity: 0.5; cursor: default; }
+.btn-nav:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 8px 18px rgba(2,6,23,0.08); }
+
+.card-indicator { font-size: 13px; color: #374151; margin: 0 10px; }
+
+

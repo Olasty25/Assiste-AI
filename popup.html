@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>AI Web Tool</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="popup.css">
+    
+</head>
+<body>
+
+    <div class="container">
+        <header>
+            <h1>Assiste AI</h1>
+            <h2>Search the website</h2>
+        </header>
+
+        <!-- In popup.html -->
+        
+    <div id="model-picker" class="model-picker">
+        <!-- Each icon is now wrapped in a div -->
+        <div class="model-icon-wrapper active" data-model="gpt-3.5-turbo">
+            <img src="icons/models/openai.png" alt="OpenAI" class="model-icon">
+        </div>
+
+        <div class="model-icon-wrapper" data-model="gemini-pro">
+            <img src="icons/models/gemini.png" alt="Gemini" class="model-icon">
+        </div>
+
+        <div class="model-icon-wrapper" data-model="llama3-8b-8192">
+            <img src="icons/models/groq.png" alt="Groq" class="model-icon">
+        </div>
+    </div>
+
+        <!-- In popup.html -->
+
+<!-- This group is visible by default -->
+        <div id="button-group" class="button-group">
+            <div class="dropdown" id="summarize-dropdown">
+                <button id="summarize-button" class="casual" aria-label="More options">
+                    <!-- three-dot more icon -->
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <circle cx="5" cy="12" r="1.5"/>
+                        <circle cx="12" cy="12" r="1.5"/>
+                        <circle cx="19" cy="12" r="1.5"/>
+                    </svg>
+                </button>
+                <div class="dropdown-content" id="summarize-options">
+                    <button id="find-key-info">Find Key Info</button>
+                    <button id="summarize-page">Summarize</button>
+                    <button id="analyze-page">Analyze</button>
+                </div>
+            </div>
+            <button id="search-button">Search</button>
+        </div>
+
+        <!-- This group is hidden by default and appears when "Search" is clicked -->
+        <div id="search-input-group" class="hidden">
+            <div style="display: flex; align-items: center; gap: 12px;">
+                <div id="go-back-icon" style="cursor: pointer; display: flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; transition: background-color 0.2s;" onmouseover="this.style.backgroundColor='#f0f0f0'" onmouseout="this.style.backgroundColor='transparent';">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <path d="M15 18L9 12L15 6"/>
+                    </svg>
+                </div>
+                <div style="flex: 1; display: flex; gap: 8px;">
+                    <input id="search-input" type="text" placeholder="Enter your question" style="flex: 1; padding: 8px 12px; border: 1px solid #e0e0e0; border-radius: 6px; font-size: 14px; outline: none;" />
+                    <button id="send-button" style="display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; padding: 0; border: none; border-radius: 50%; background-color: #007bff; color: #fff; cursor: pointer; transition: background-color 0.2s; flex-shrink: 0;" onmouseover="this.style.backgroundColor='#0056b3'" onmouseout="this.style.backgroundColor='#007bff'">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div id="content-area" class="content-area">
+            <div id="loader" class="loader hidden"></div>
+            <div id="summary-result" class="hidden"></div>
+            <div id="error-message" class="error hidden"></div>
+        </div>
+    </div>
+
+    <!-- Make sure you have showdown.min.js in your project folder -->
+    <script src="showdown.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
